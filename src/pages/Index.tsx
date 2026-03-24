@@ -17,29 +17,67 @@ const Index = () => {
       {/* Hero */}
       <section className="gradient-hero">
         <div className="container mx-auto px-4 py-16 md:py-24">
-          <div className="max-w-2xl animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-              <Sparkles size={14} /> Flat 20% Off on Everything
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div className="animate-fade-in">
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+                <Sparkles size={14} /> Flat 20% Off on Everything
+              </div>
+              <h1 className="text-4xl md:text-6xl font-extrabold text-foreground leading-tight mb-6 text-balance">
+                Discover Your <span className="text-primary">Perfect</span> Style
+              </h1>
+              <p className="text-muted-foreground text-lg mb-8 max-w-md leading-relaxed">
+                Premium fashion at unbeatable prices. Shop 50+ curated styles in Indian Rupees.
+              </p>
+              <div className="flex gap-3">
+                <Link
+                  to="/products"
+                  className="inline-flex items-center gap-2 gradient-primary text-primary-foreground px-8 py-3.5 rounded-xl font-semibold text-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.98]"
+                >
+                  Shop Now <ArrowRight size={16} />
+                </Link>
+                <Link
+                  to="/products?category=Jackets"
+                  className="inline-flex items-center gap-2 bg-card text-foreground px-8 py-3.5 rounded-xl font-semibold text-sm card-shadow hover:card-shadow-hover hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  New Arrivals
+                </Link>
+              </div>
             </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-foreground leading-tight mb-6 text-balance">
-              Discover Your <span className="text-primary">Perfect</span> Style
-            </h1>
-            <p className="text-muted-foreground text-lg mb-8 max-w-md leading-relaxed">
-              Premium fashion at unbeatable prices. Shop 50+ curated styles in Indian Rupees.
-            </p>
-            <div className="flex gap-3">
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 gradient-primary text-primary-foreground px-8 py-3.5 rounded-xl font-semibold text-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.98]"
-              >
-                Shop Now <ArrowRight size={16} />
-              </Link>
-              <Link
-                to="/products?category=Jackets"
-                className="inline-flex items-center gap-2 bg-card text-foreground px-8 py-3.5 rounded-xl font-semibold text-sm card-shadow hover:card-shadow-hover hover:-translate-y-0.5 transition-all duration-300"
-              >
-                New Arrivals
-              </Link>
+
+            {/* Hero images grid */}
+            <div className="hidden md:grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div className="rounded-2xl overflow-hidden card-shadow hover:card-shadow-hover transition-all duration-500 hover:-translate-y-1">
+                  <img
+                    src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=500&fit=crop"
+                    alt="Fashion model in stylish jacket"
+                    className="w-full h-56 object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden card-shadow hover:card-shadow-hover transition-all duration-500 hover:-translate-y-1">
+                  <img
+                    src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=600&fit=crop"
+                    alt="Fashion model walking"
+                    className="w-full h-72 object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </div>
+              <div className="space-y-4 pt-8">
+                <div className="rounded-2xl overflow-hidden card-shadow hover:card-shadow-hover transition-all duration-500 hover:-translate-y-1">
+                  <img
+                    src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=600&fit=crop"
+                    alt="Fashion collection display"
+                    className="w-full h-72 object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden card-shadow hover:card-shadow-hover transition-all duration-500 hover:-translate-y-1">
+                  <img
+                    src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&h=500&fit=crop"
+                    alt="Shopping fashion bags"
+                    className="w-full h-56 object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
