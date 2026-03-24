@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Minus, Plus, ShoppingBag } from "lucide-react";
+import { ArrowLeft, Minus, Plus, ShoppingBag, Star, Truck, Shield, RotateCcw } from "lucide-react";
 import { products } from "@/data/products";
 import { useCartStore } from "@/stores/useCartStore";
 import ProductCard from "@/components/ProductCard";
@@ -31,6 +31,7 @@ const ProductDetail = () => {
   }
 
   const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
+  const savings = (product.originalPrice - product.price) * quantity;
 
   const handleAddToCart = () => {
     if (!selectedSize) { toast.error("Please select a size"); return; }
@@ -50,16 +51,19 @@ const ProductDetail = () => {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-14">
           {/* Images */}
           <div className="space-y-3">
-            <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-muted">
+            <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-muted relative">
               <img src={product.images[activeImage]} alt={product.name} className="w-full h-full object-cover" />
+              <span className="absolute top-4 left-4 bg-destructive text-destructive-foreground text-sm font-bold px-3 py-1 rounded-md shadow-md">
+                {product.discount}% OFF
+              </span>
             </div>
             <div className="flex gap-3">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImage(i)}
-                  className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-colors ${
-                    activeImage === i ? "border-primary" : "border-transparent"
+                  className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
+                    activeImage === i ? "border-primary scale-105" : "border-transparent hover:border-primary/30"
                   }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
@@ -69,14 +73,29 @@ const ProductDetail = () => {
           </div>
 
           {/* Info */}
-          <div className="space-y-6">
+          <div className="space-y-5">
             <div>
               <p className="text-sm text-primary font-semibold uppercase tracking-wider mb-2">{product.category}</p>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">{product.name}</h1>
-              <p className="text-2xl font-bold text-foreground">${product.price.toFixed(2)}</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-3">{product.name}</h1>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-1 bg-success/10 text-success text-xs font-bold px-2 py-1 rounded">
+                  <span>{product.rating}</span>
+                  <Star size={10} className="fill-current" />
+                </div>
+                <span className="text-xs text-muted-foreground">|  Free Delivery</span>
+              </div>
+              {/* Price block */}
+              <div className="bg-accent/50 rounded-xl p-4">
+                <div className="flex items-baseline gap-3">
+                  <p className="text-3xl font-bold text-foreground">₹{product.price.toLocaleString("en-IN")}</p>
+                  <p className="text-lg text-muted-foreground line-through">₹{product.originalPrice.toLocaleString("en-IN")}</p>
+                  <span className="text-sm font-bold text-success">{product.discount}% off</span>
+                </div>
+                <p className="text-xs text-success font-semibold mt-1">You save ₹{(product.originalPrice - product.price).toLocaleString("en-IN")}</p>
+              </div>
             </div>
 
-            <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+            <p className="text-muted-foreground leading-relaxed text-sm">{product.description}</p>
 
             {/* Size */}
             <div>
@@ -86,7 +105,7 @@ const ProductDetail = () => {
                   <button
                     key={s}
                     onClick={() => setSelectedSize(s)}
-                    className={`min-w-[44px] h-11 px-4 rounded-xl text-sm font-medium border transition-all ${
+                    className={`min-w-[44px] h-11 px-4 rounded-xl text-sm font-medium border transition-all active:scale-95 ${
                       selectedSize === s
                         ? "bg-primary text-primary-foreground border-primary"
                         : "border-border text-foreground hover:border-primary/50"
@@ -100,14 +119,14 @@ const ProductDetail = () => {
 
             {/* Color */}
             <div>
-              <h4 className="font-semibold text-sm mb-3">Color</h4>
+              <h4 className="font-semibold text-sm mb-3">Color{selectedColor && `: ${selectedColor}`}</h4>
               <div className="flex gap-3">
                 {product.colors.map((c) => (
                   <button
                     key={c.name}
                     onClick={() => setSelectedColor(c.name)}
-                    className={`w-10 h-10 rounded-full border-2 transition-all ${
-                      selectedColor === c.name ? "border-primary scale-110 ring-2 ring-primary/30" : "border-border"
+                    className={`w-10 h-10 rounded-full border-2 transition-all active:scale-90 ${
+                      selectedColor === c.name ? "border-primary scale-110 ring-2 ring-primary/30" : "border-border hover:scale-105"
                     }`}
                     style={{ backgroundColor: c.hex }}
                     title={c.name}
@@ -120,11 +139,11 @@ const ProductDetail = () => {
             <div>
               <h4 className="font-semibold text-sm mb-3">Quantity</h4>
               <div className="inline-flex items-center gap-3 bg-secondary rounded-xl p-1">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors active:scale-90">
                   <Minus size={16} />
                 </button>
                 <span className="w-8 text-center font-semibold">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
+                <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors active:scale-90">
                   <Plus size={16} />
                 </button>
               </div>
@@ -133,10 +152,27 @@ const ProductDetail = () => {
             {/* Add to Cart */}
             <button
               onClick={handleAddToCart}
-              className="w-full gradient-primary text-primary-foreground py-4 rounded-xl font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+              className="w-full gradient-primary text-primary-foreground py-4 rounded-xl font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.98]"
             >
-              <ShoppingBag size={18} /> Add to Cart — ${(product.price * quantity).toFixed(2)}
+              <ShoppingBag size={18} /> Add to Cart — ₹{(product.price * quantity).toLocaleString("en-IN")}
             </button>
+            {savings > 0 && (
+              <p className="text-center text-xs font-semibold text-success">You save ₹{savings.toLocaleString("en-IN")} on this purchase!</p>
+            )}
+
+            {/* Trust badges */}
+            <div className="grid grid-cols-3 gap-3 pt-2">
+              {[
+                { icon: Truck, text: "Free Delivery" },
+                { icon: Shield, text: "Secure Payment" },
+                { icon: RotateCcw, text: "Easy Returns" },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex flex-col items-center gap-1 p-3 bg-secondary rounded-xl text-center">
+                  <Icon size={16} className="text-primary" />
+                  <span className="text-[10px] font-medium text-muted-foreground">{text}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
