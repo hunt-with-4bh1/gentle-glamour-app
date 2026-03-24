@@ -44,13 +44,13 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Hero images grid */}
+            {/* Hero images grid - desktop */}
             <div className="hidden md:grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div className="rounded-2xl overflow-hidden card-shadow hover:card-shadow-hover transition-all duration-500 hover:-translate-y-1">
                   <img
-                    src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=500&fit=crop"
-                    alt="Fashion model in stylish jacket"
+                    src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400&h=500&fit=crop"
+                    alt="Fashion model posing"
                     className="w-full h-56 object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -77,6 +77,24 @@ const Index = () => {
                     className="w-full h-56 object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
+              </div>
+            </div>
+
+            {/* Hero image - mobile */}
+            <div className="md:hidden grid grid-cols-2 gap-3">
+              <div className="rounded-2xl overflow-hidden card-shadow">
+                <img
+                  src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=300&h=400&fit=crop"
+                  alt="Fashion model posing"
+                  className="w-full h-40 object-cover"
+                />
+              </div>
+              <div className="rounded-2xl overflow-hidden card-shadow">
+                <img
+                  src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&h=400&fit=crop"
+                  alt="Fashion collection"
+                  className="w-full h-40 object-cover"
+                />
               </div>
             </div>
           </div>
